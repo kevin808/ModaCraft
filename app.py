@@ -131,7 +131,7 @@ async def call_multimodal_llm(command: str, modalities: MCPInputData):
     # 3. Prepare content for LLM
     context = "\n".join([
         f"[{idx+1}] {item.title}: {item.content}" 
-        for idx, item in enumerate(retrieved_items) 
+        for idx, item in enumerate(retrieved_items[:10])  # Limit to first 5 items
         if item.content
     ])
     
@@ -140,7 +140,7 @@ async def call_multimodal_llm(command: str, modalities: MCPInputData):
 
 {context}
 
-请给出一个结构化的分析报告。在引用信息时，请使用方括号中的数字来标注引用来源，例如[1]、[2]等。"""
+请给出一个结构化的分析报告。仅使用[1]到[10]的引用编号来标注信息来源。"""
     
     logging.debug(f"LLM prompt: {prompt}")
 
@@ -162,7 +162,7 @@ async def call_multimodal_llm(command: str, modalities: MCPInputData):
     return MCPOutputData(
         result_text=result_text,
         used_images=[item.url for item in retrieved_items if item.type == "image"][:2],
-        references=retrieved_items[:5]
+        references=retrieved_items[:10]  # Consistently limit to 5 references
     )
 
 def main():
