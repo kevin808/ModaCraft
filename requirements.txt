@@ -1,0 +1,8 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+httpx>=0.24.0
+pydantic>=1.8.0
+python-multipart>=0.0.5
+openai>=1.63.0
+requests
+streamlit
